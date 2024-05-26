@@ -4,7 +4,7 @@
 <h2>Tasks TODO list</h2>
 <table>
   <tr>
-    <th>Name</th>
+    <th>What</th>
     <th>When</th>
   </tr>
   {% for task in tasks %}
@@ -18,4 +18,9 @@
   </tr>
   {% endfor %}
 </table>
+<button>
+    <a href="{% url 'todolist:add' %}">
+        Add new Task
+    </a>
+</button>
 {% endblock %}
