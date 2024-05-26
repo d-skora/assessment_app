@@ -28,3 +28,12 @@ def add(request):
         form = TaskForm()
 
     return render(request, "tasks/add.html", {"form": form})
+
+
+# Endpoint for clearing the entire list of tasks
+def clear(request):
+    if request.method == "POST":
+        entries = Task.objects.all()
+        entries.delete()
+
+    return HttpResponseRedirect("/")

@@ -53,3 +53,11 @@ class ProjectTests(TestCase):
         response = self.client.post('/add', {'name': 'Drink soda', 'date_0': '2024-05-31', 'date_1': '12:00:00'})
         self.assertRedirects(response, '/')
         self.assertEqual(Task.objects.count(), task_count + 1)
+
+    def test_clear(self):
+        task1 = create_task('Eat chips', '2024-05-26T10:00:00Z')
+        task2 = create_task('Drink cola', '2024-05-30T12:00:00Z')
+        self.assertEqual(Task.objects.count(), 2)
+        response = self.client.post('/clear')
+        self.assertRedirects(response, '/')
+        self.assertEqual(Task.objects.count(), 0)

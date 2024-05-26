@@ -23,4 +23,8 @@
         Add new Task
     </a>
 </button>
+<form action="{% url 'todolist:clear' %}" method="post">
+    {% csrf_token %}
+    <button type='submit' value='Clear'>Restart TODO list</button>
+</form>
 {% endblock %}
