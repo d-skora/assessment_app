@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link  href="{% static 'styles.css' %}" rel="stylesheet">
+  <title>My TODO App</title>
+</head>
+<body>
+  <header>
+  </header>
+
+  <main>
+    {% block content %}
+    {% endblock content %}
+  </main>
+</body>
+</html>

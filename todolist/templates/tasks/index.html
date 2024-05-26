@@ -1,0 +1,21 @@
+{% extends "tasks/base.html" %}
+
+{% block content %}
+<h2>Tasks TODO list</h2>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>When</th>
+  </tr>
+  {% for task in tasks %}
+  <tr>
+    <td>{{ task.name }}</td>
+    <td>{{ task.date|date:"H:i, l, jS F, Y" }}</td>
+  </tr>
+  {% empty %}
+  <tr>
+    <td colspan="2">Nothing to do!</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
