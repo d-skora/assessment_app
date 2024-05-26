@@ -9,7 +9,7 @@
   </tr>
   {% for task in tasks %}
   <tr>
-    <td>{{ task.name }}</td>
+    <td><a href="{% url 'todolist:edit' task.id %}">{{ task.name }}</a></td>
     <td>{{ task.date|date:"H:i, l, jS F, Y" }}</td>
   </tr>
   {% empty %}

@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from todolist.forms import TaskForm
 from todolist.models import Task
@@ -19,7 +19,7 @@ def add(request):
         # validate
         if form.is_valid():
             # Save new Task
-            task = Task.objects.create(name=form.cleaned_data['name'], date=form.cleaned_data['date'])
+            form.save()
             # redirect to index:
             return HttpResponseRedirect("/")
 
@@ -37,3 +37,17 @@ def clear(request):
         entries.delete()
 
     return HttpResponseRedirect("/")
+
+
+# Endpoint for editing existing tasks
+def edit(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    form = TaskForm(request.POST or None, instance=task)
+    # process form data if this is a POST
+    if request.method == "POST" and form.is_valid() and form.has_changed():
+        # save existing Task
+        form.save()
+        # redirect to index:
+        return HttpResponseRedirect("/")
+
+    return render(request, "tasks/edit.html", {"form": form, "task": task})
