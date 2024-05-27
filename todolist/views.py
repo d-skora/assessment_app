@@ -51,3 +51,15 @@ def edit(request, task_id):
         return HttpResponseRedirect("/")
 
     return render(request, "tasks/edit.html", {"form": form, "task": task})
+
+
+# Endpoint for deleting existing tasks
+def delete(request, task_id):
+    if request.method == "POST":
+        # fetch Task to be deleted
+        task = get_object_or_404(Task, pk=task_id)
+        # delete existing Task
+        task.delete()
+
+    # redirect to index:
+    return HttpResponseRedirect("/")
