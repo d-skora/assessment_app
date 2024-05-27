@@ -86,6 +86,18 @@ class ProjectTests(TestCase):
         )
         self.assertEqual(response.status_code, 404)
 
+    def test_edit_POST_no_changes(self):
+        task1 = create_task('Eat chips', '2024-05-26T10:00:00Z')
+        task_count = Task.objects.count()
+        response = self.client.post(
+            reverse('todolist:edit', args=[task1.id]),
+            {'name': 'Eat chips', 'date_0': '2024-05-26', 'date_1': '10:00:00'}
+        )
+        self.assertTemplateUsed(response, "tasks/edit.html")
+        self.assertFormError(
+            response.context['form'], None, ['Nothing changed']
+        )
+
     def test_edit_POST_invalid(self):
         task1 = create_task('Eat chips', '2024-05-26T10:00:00Z')
         response = self.client.post(

@@ -49,6 +49,8 @@ def edit(request, task_id):
         form.save()
         # redirect to index:
         return HttpResponseRedirect("/")
+    if not form.has_changed():
+        form.add_error(None, 'Nothing changed')
 
     return render(request, "tasks/edit.html", {"form": form, "task": task})
 
