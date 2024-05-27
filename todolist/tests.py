@@ -121,3 +121,22 @@ class ProjectTests(TestCase):
         response = self.client.post(reverse('todolist:delete', args=[task1.id]))
         self.assertRedirects(response, '/')
         self.assertEqual(Task.objects.count(), task_count - 1)
+
+    def test_complete_GET(self):
+        response = self.client.get(reverse('todolist:complete', args=[1]))
+        self.assertRedirects(response, '/')
+
+    def test_complete_POST_invalid(self):
+        response = self.client.post(reverse('todolist:complete', args=[1]))
+        self.assertEqual(response.status_code, 404)
+
+    def test_complete_POST_valid(self):
+        task1 = create_task('Eat chips', '2024-05-26T10:00:00Z')
+        task2 = create_task('Drink cola', '2024-05-30T12:00:00Z')
+        task_count = Task.objects.count()
+        done_count = Task.objects.filter(done=True).count()
+        response = self.client.post(reverse('todolist:complete', args=[task1.id]))
+        self.assertRedirects(response, '/')
+        self.assertEqual(Task.objects.count(), task_count)
+        self.assertEqual(Task.objects.filter(done=True).count(), done_count + 1)
+        self.assertTrue(Task.objects.get(pk=task1.id))

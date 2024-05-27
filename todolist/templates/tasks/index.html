@@ -3,20 +3,31 @@
 {% block content %}
 <h2>Tasks TODO list</h2>
 <table>
-  <tr>
+    <tr>
     <th>What</th>
     <th>When</th>
-  </tr>
-  {% for task in tasks %}
-  <tr>
-    <td><a href="{% url 'todolist:edit' task.id %}">{{ task.name }}</a></td>
-    <td>{{ task.date|date:"H:i, l, jS F, Y" }}</td>
-  </tr>
-  {% empty %}
-  <tr>
-    <td colspan="2">Nothing to do!</td>
-  </tr>
-  {% endfor %}
+    <th>Done?</th>
+    </tr>
+    {% for task in tasks %}
+        <tr>
+            <td><a href="{% url 'todolist:edit' task.id %}">{{ task.name }}</a></td>
+            <td>{{ task.date|date:"H:i, l, jS F, Y" }}</td>
+            {% if task.done %}
+                <td>DONE!</td>
+            {% else %}
+                <td>
+                    <form action="{% url 'todolist:complete' task.id %}" method="post">
+                        {% csrf_token %}
+                        <button type='submit' value='Complete'>Mark as DONE</button>
+                    </form>
+                </td>
+            {% endif %}
+        </tr>
+    {% empty %}
+        <tr>
+            <td colspan="2">Nothing to do!</td>
+        </tr>
+    {% endfor %}
 </table>
 <button>
     <a href="{% url 'todolist:add' %}">

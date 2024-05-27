@@ -63,3 +63,16 @@ def delete(request, task_id):
 
     # redirect to index:
     return HttpResponseRedirect("/")
+
+
+# Endpoint for marking an existing task as done
+def complete(request, task_id):
+    if request.method == "POST":
+        # fetch Task to be updated
+        task = get_object_or_404(Task, pk=task_id)
+        # update Task
+        task.done = True
+        task.save()
+
+    # redirect to index:
+    return HttpResponseRedirect("/")

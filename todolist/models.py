@@ -7,6 +7,7 @@ class Task(models.Model):
     date = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     modified_at = models.DateTimeField(auto_now=True, editable=False)
+    done = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
