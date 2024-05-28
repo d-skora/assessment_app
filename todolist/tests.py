@@ -16,6 +16,13 @@ class TaskModelTest(TestCase):
         self.assertEqual(str(task), task.name)
 
 
+class LocationModelTest(TestCase):
+
+    def test_string_representation(self):
+        task = Task(name="Rome")
+        self.assertEqual(str(task), task.name)
+
+
 class TaskFormTest(TestCase):
     # Valid Form Data
     def test_TaskForm_valid(self):
