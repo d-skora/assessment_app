@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from .forms import TaskForm
-from .models import Task
+from .models import Task, Location
 from django.urls import reverse
 
 
@@ -26,7 +26,9 @@ class LocationModelTest(TestCase):
 class TaskFormTest(TestCase):
     # Valid Form Data
     def test_TaskForm_valid(self):
-        form = TaskForm({'name': 'Eat crisps', 'date_0': '2024-05-26', 'date_1': '10:00:00'})
+        form = TaskForm(
+            {'name': 'Eat crisps', 'date_0': '2024-05-26', 'date_1': '10:00:00'}
+        )
         self.assertTrue(form.is_valid())
 
     # Invalid Form Data
