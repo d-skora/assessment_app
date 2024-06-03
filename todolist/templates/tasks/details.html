@@ -1,0 +1,25 @@
+{% extends "tasks/base.html" %}
+
+{% block content %}
+
+<div class="background{% if weather.weather %} {{ weather.weather }}{% endif %}">
+    <div class="grid-container">
+        <div class="grid-item">What: </div>
+        <div class="grid-item">{{ task.name }}</div>
+        <div class="grid-item">When: </div>
+        <div class="grid-item">{{ task.date }}</div>
+        <div class="grid-item">Done? </div>
+        <div class="grid-item">{% if task.done %}Yes{% else %}No{% endif %}</div>
+    </div>
+    <button value='Edit'><a href="{% url 'todolist:edit' task.id %}">Edit</a></button>
+    <form action="{% url 'todolist:delete' task.id  %}" method="post">
+        {% csrf_token %}
+        <button type='submit' value='Delete'>Delete</button>
+    </form>
+    <form action="{% url 'todolist:complete' task.id %}" method="post">
+        {% csrf_token %}
+        <button type='submit' value='Complete'>Mark as DONE</button>
+    </form>
+</div>
+{% include "tasks/goback.html" %}
+{% endblock %}

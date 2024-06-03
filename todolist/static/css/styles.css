@@ -1,0 +1,12 @@
+.background {
+    width: 20rem;
+    &.bad {
+        background-color: cyan;
+    }
+    &.average {
+        background-color: yellow;
+    }
+    &.good {
+        background-color: red;
+    }
+}

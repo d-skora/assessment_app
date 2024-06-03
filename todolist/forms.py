@@ -9,7 +9,12 @@ class TaskForm(forms.ModelForm):
     )
     location = forms.ModelChoiceField(
         queryset=Location.objects.all(),
-        widget=forms.Select(attrs={'class': 'form-control'}),
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+                'onChange': 'getWeatherForLocation(this.value)'
+            }
+        ),
         empty_label="No location",
         required=False,
         blank=True,

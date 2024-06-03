@@ -1,5 +1,4 @@
 {% extends "tasks/base.html" %}
-
 {% block content %}
 <h2>Tasks TODO list</h2>
 <table>
@@ -10,7 +9,11 @@
     </tr>
     {% for task in tasks %}
         <tr>
-            <td><a href="{% url 'todolist:edit' task.id %}">{{ task.name }}</a></td>
+            <td>
+                <div class="background {{ task.weather.weather }}">
+                    <a href="{% url 'todolist:details' task.id %}">{{ task.name }}</a>
+                </div>
+            </td>
             <td>{{ task.date|date:"H:i, l, jS F, Y" }}</td>
             {% if task.done %}
                 <td>DONE!</td>
@@ -37,5 +40,9 @@
 <form action="{% url 'todolist:clear' %}" method="post">
     {% csrf_token %}
     <button type='submit' value='Clear'>Restart TODO list</button>
+</form>
+<form action="{% url 'todolist:force_weather_refresh' %}" method="post">
+    {% csrf_token %}
+    <button type='submit' value='Refresh'>Refresh weather readings</button>
 </form>
 {% endblock %}

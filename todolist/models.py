@@ -25,3 +25,26 @@ class Location(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# Model for Weather
+class Weather(models.Model):
+    # When the location for the weather read is deleted, the read is obsolete and should be deleted along
+    location = models.OneToOneField(
+        'Location', on_delete=models.CASCADE, primary_key=True, related_name='weather'
+    )
+    temperature = models.FloatField()
+    status = models.CharField(max_length=500)
+    modified_at = models.DateTimeField(auto_now=True, editable=False)
+
+    def __str__(self):
+        return self.status + ', ' + str(self.temperature)
+
+
+# Model for last weather reads of Done Tasks
+class LastWeatherRead(models.Model):
+    task = models.OneToOneField(
+        'Task', on_delete=models.CASCADE, primary_key=True, related_name='last_weather_read'
+    )
+    temperature = models.FloatField()
+    status = models.CharField(max_length=500)
