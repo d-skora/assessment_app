@@ -48,7 +48,7 @@ def request_weather(location):
     response = requests.get(url)
     data = json.loads(response.text)
     temp = data['main']['temp']
-
+    # parse all the weather data to get what is interesting for us - how ugly is the sky and how hot it is
     atmospheric_particles = parse_weather(data['weather'])
     temperature = parse_temp(temp)
     can_be_sunny = is_daytime(data)

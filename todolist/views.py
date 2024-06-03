@@ -28,13 +28,14 @@ def index(request):
     return render(
         request,
         "tasks/index.html",
-        {'tasks': tasks, 'weather_reads': weather_reads}
+        {'tasks': tasks}
     )
 
 
 # Endpoint for task details
 def details(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
+    # Fetch weather for the task location
     if task.location is not None:
         weather = fetch_weather(task.location)
     else:
@@ -74,6 +75,7 @@ def clear(request):
 # Endpoint for editing existing tasks
 def edit(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
+    # Fetch weather for the task location
     if task.location is not None:
         weather = fetch_weather(task.location)
     else:
@@ -111,6 +113,7 @@ def complete(request, task_id):
         # update Task
         task.done = True
         if hasattr(task, 'location'):
+            # Save the last weather read for the task, it won't be fetching weather updates anymore
             last_weather_read = Weather.objects.filter(location=task.location).first()
             if last_weather_read:
                 LastWeatherRead.objects.create(
